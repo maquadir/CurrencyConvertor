@@ -15,10 +15,12 @@ protocol VCViewModelDelegate{
     func shareCurrencyItems(_ currencyConv: [Curr], BuyTT:[String:String],  SellTT:[String:String],BuyNotes:[String:String],SellNotes:[String:String],BuyTC:[String:String])
     
 
+
  }
  
 public class CurrencyViewModel {
     
+    //variables
     let jsonurl:String = "https://www.westpac.com.au/bin/getJsonRates.wbc.fx.json"
     var vcviewmodeldelegate:VCViewModelDelegate?
     let dataclassList:[DataClass] = []
@@ -84,7 +86,7 @@ public class CurrencyViewModel {
                                 let product = thing_value["Rates"] as?  [String: NSDictionary]
                                 let rates = product?[thing_key] as?  [String: Any]
                                 
-                                for (thing_key, thing_value)   in  rates as! [String:Any] {
+                    for (thing_key, thing_value)   in  rates! {
                                     switch thing_key {
                                     case "currencyCode":
                                         self.currencyCode = thing_value as! String
@@ -144,9 +146,9 @@ public class CurrencyViewModel {
                     
                                 
                   }
-                            
-                            //share currency items via delegate method to ViewController
-                            self.vcviewmodeldelegate?.shareCurrencyItems(self.curr,BuyTT: self.BuyTT,SellTT: self.SellTT,BuyNotes: self.BuyTC,SellNotes: self.BuyNotes,BuyTC: self.SellNotes)
+                    //share currency items via delegate method to ViewController
+                    self.vcviewmodeldelegate?.shareCurrencyItems(self.curr,BuyTT: self.BuyTT,SellTT:self.SellTT,BuyNotes: self.BuyTC,SellNotes: self.BuyNotes,BuyTC: self.SellNotes)
+                        
                            
                         } catch {
                             NSLog("ERROR \(error.localizedDescription)")
@@ -159,4 +161,6 @@ public class CurrencyViewModel {
 
 
 }
+    
+   
 }
